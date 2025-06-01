@@ -32,11 +32,9 @@
 
     <div class="main-wrapper">
 
-        {{-- Ini adalah cara yang benar untuk menyertakan header Blade --}}
-        @include('layout._header') 
+        <div id="header-placeholder"></div>
 
-        {{-- Ini adalah cara yang benar untuk menyertakan sidebar Blade --}}
-        @include('layout._sidebar') 
+        <div id="sidebar-placeholder"></div>
 
         <div class="page-wrapper">
             <div class="content">
@@ -325,114 +323,135 @@
 
 
     <script src="assets/js/jquery-3.6.0.min.js"></script>
+
     <script src="assets/js/feather.min.js"></script>
+
     <script src="assets/js/jquery.slimscroll.min.js"></script>
+
     <script src="assets/js/jquery.dataTables.min.js"></script>
     <script src="assets/js/dataTables.bootstrap4.min.js"></script>
+
     <script src="assets/js/bootstrap.bundle.min.js"></script>
+
     <script src="assets/plugins/apexchart/apexcharts.min.js"></script>
     <script src="assets/plugins/apexchart/chart-data.js"></script>
+
     <script src="assets/js/script.js"></script>
-    {{-- Script untuk inisialisasi seperti feather icons dan slimscroll mungkin perlu dipindahkan ke script.js atau diinisialisasi ulang di sini jika komponen tersebut berada di header/sidebar --}}
     <script>
-        // Anda mungkin perlu memanggil inisialisasi Feather Icons dan SlimScroll setelah Blade `@include`
-        // Karena elemen-elemen ini ada di dalam _header dan _sidebar.
-        $(document).ready(function() {
-            if (typeof feather !== 'undefined') {
-                feather.replace();
-                console.log("Feather icons diinisialisasi untuk seluruh halaman.");
-            }
-
-            const $slimScrollDiv = $('.slimscroll'); // Selector yang lebih umum jika ada di berbagai tempat
-            if ($slimScrollDiv.length && typeof $.fn.slimScroll === 'function') {
-                $slimScrollDiv.slimScroll({
-                    height: "auto",
-                    width: "100%",
-                    position: "right",
-                    size: "7px",
-                    color: "#ccc",
-                    wheelStep: 10,
-                    touchScrollStep: 100,
-                    allowPageScroll: false
-                });
-                var wHeight = $(window).height() - 60;
-                $slimScrollDiv.css('height', wHeight + 'px');
-                if ($slimScrollDiv.parent().hasClass('slimScrollDiv')) {
-                    $slimScrollDiv.parent().css('height', wHeight + 'px');
+    $(document).ready(function() {
+        // Memuat Header
+        $("#header-placeholder").load("layout/_header.html", function(response, status, xhr) {
+            if (status == "success") {
+                console.log("Header berhasil dimuat.");
+                if (typeof feather !== 'undefined') {
+                    feather.replace();
                 }
-                console.log("SlimScroll diinisialisasi.");
-            } else {
-                console.warn("Elemen .slimscroll tidak ditemukan atau plugin jQuery slimScroll belum siap.");
-            }
-
-            // Bagian untuk mengatur link aktif di sidebar
-            // Ini harus disesuaikan jika _sidebar.blade.php menjadi partial Blade
-            // Anda bisa meneruskan variabel `currentPageFile` dari controller atau 
-            // menanganinya di sisi client jika Anda masih ingin logikanya di JS.
-            // Contoh sederhana dengan JavaScript setelah include partial:
-            var currentPageFile = window.location.pathname.split("/").pop();
-            if (currentPageFile === "" || !currentPageFile.includes(".")) { // Tidak perlu .html, bisa saja URL tanpa ekstensi
-                currentPageFile = "dashboard"; // Jika URL root, anggap ini dashboard atau welcome
-            }
-            
-            // Konversi URL rute Laravel ke nama file Blade yang sesuai
-            switch(currentPageFile) {
-                case 'newuser':
-                    currentPageFile = 'newuser';
-                    break;
-                case 'userlists':
-                    currentPageFile = 'userlists';
-                    break;
-                case 'dashboard':
-                    currentPageFile = 'index'; // 'index.blade.php' di folder Dashboard
-                    break;
-                case 'add': // untuk /product/add
-                    currentPageFile = 'addproduct';
-                    break;
-                case 'list': // untuk /product/list atau /transaksi/purchase/list
-                    if (window.location.pathname.includes('/product/')) {
-                        currentPageFile = 'productlist';
-                    } else if (window.location.pathname.includes('/transaksi/purchase/')) {
-                        currentPageFile = 'purchaselist';
-                    }
-                    break;
-                case '': // Rute root '/'
-                    currentPageFile = 'welcome';
-                    break;
-                default:
-                    // Biarkan apa adanya atau set ke default jika tidak cocok
-                    break;
-            }
-
-            // Hapus semua kelas active/subdrop yang mungkin sudah ada
-            $('#sidebar-menu').find('li.active').removeClass('active');
-            $('#sidebar-menu').find('a.active').removeClass('active');
-            $('#sidebar-menu').find('a.subdrop').removeClass('subdrop');
-            $('#sidebar-menu').find('li.submenu > ul').css('display', 'none');
-
-            // Temukan link yang cocok
-            let $targetLink = $('#sidebar-menu').find('a[href*="' + currentPageFile + '"]'); // Gunakan href* untuk pencarian substring
-
-            if ($targetLink.length) {
-                $targetLink.addClass('active');
-
-                let $parentSubmenuLi = $targetLink.closest('li.submenu');
-                if ($parentSubmenuLi.length) {
-                    $parentSubmenuLi.children('a:first').addClass('active');
-                    $parentSubmenuLi.children('a:first').addClass('subdrop');
-                    $parentSubmenuLi.children('ul').css('display', 'block');
-                }
-                console.log("Link aktif diatur untuk: " + currentPageFile);
-            } else {
-                console.warn("Link aktif untuk " + currentPageFile + " tidak ditemukan di sidebar.");
-                 // Fallback: Jika tidak ada yang cocok, aktifkan Dashboard
-                if (currentPageFile === "index" || currentPageFile === "dashboard") {
-                     $('#sidebar-menu').find('a[href="dashboard"]').addClass('active'); // Sesuaikan ini dengan href rute Dashboard Anda
-                } else if (currentPageFile === "welcome") {
-                    $('#sidebar-menu').find('a[href="/"]').addClass('active'); // Jika welcome ada di menu
-                }
+            } else if (status == "error") {
+                console.error("Gagal memuat _header.html: " + xhr.status + " " + xhr.statusText);
+                $("#header-placeholder").html("<p style='color:red; padding: 10px;'>Gagal memuat header.</p>");
             }
         });
+
+        // Memuat Sidebar
+        $("#sidebar-placeholder").load("layout/_sidebar.html", function(response, status, xhr) {
+            if (status == "success") {
+                console.log("Sidebar berhasil dimuat. Menginisialisasi komponen sidebar...");
+                
+                var $sidebarContainer = $(this); 
+
+                // 1. Inisialisasi ulang SlimScroll
+                const $slimScrollDiv = $sidebarContainer.find('.slimscroll');
+                if ($slimScrollDiv.length && typeof $.fn.slimScroll === 'function') {
+                    $slimScrollDiv.slimScroll({
+                        height: "auto",
+                        width: "100%",
+                        position: "right",
+                        size: "7px",
+                        color: "#ccc",
+                        wheelStep: 10,
+                        touchScrollStep: 100,
+                        allowPageScroll: false
+                    });
+                    var wHeight = $(window).height() - 60;
+                    $slimScrollDiv.css('height', wHeight + 'px');
+                    if ($slimScrollDiv.parent().hasClass('slimScrollDiv')) {
+                        $slimScrollDiv.parent().css('height', wHeight + 'px');
+                    }
+                    console.log("SlimScroll diinisialisasi untuk sidebar.");
+                } else {
+                    console.warn("Elemen .slimscroll tidak ditemukan atau plugin jQuery slimScroll belum siap.");
+                }
+
+                // 2. Atur Link Aktif untuk halaman saat ini
+                var currentPageFile = window.location.pathname.split("/").pop();
+                if (currentPageFile === "" || !currentPageFile.includes(".html")) { 
+                    currentPageFile = "index.html";
+                }
+
+                var $sidebarMenu = $sidebarContainer.find('#sidebar-menu');
+
+                // Bersihkan semua status aktif dan terbuka dari SEMUA item menu terlebih dahulu
+                $sidebarMenu.find('li.active').removeClass('active');
+                $sidebarMenu.find('a.active').removeClass('active');
+                $sidebarMenu.find('a.subdrop').removeClass('subdrop');
+                // Sembunyikan semua submenu (ul di dalam li.submenu)
+                $sidebarMenu.find('li.submenu > ul').css('display', 'none');
+
+                // Cari link <a> yang href-nya cocok dengan halaman saat ini (misalnya, link "Product List")
+                const $targetLink = $sidebarMenu.find('a[href="' + currentPageFile + '"]');
+
+                if ($targetLink.length) {
+                    // (A) Aktifkan link <a> subitem halaman saat ini (misalnya, "Product List")
+                    // Ini akan memberikan gaya seperti bulatan terisi atau warna teks khusus.
+                    $targetLink.addClass('active');
+                    
+                    // (B) Untuk <li> yang berisi $targetLink (misalnya <li> "Product List")
+                    // JANGAN tambahkan kelas 'active' jika Anda tidak ingin background biru tua di sini.
+                    // CSS untuk 'a.active' seharusnya cukup untuk menyorot subitem.
+                    // Jika Anda butuh kelas di <li> untuk styling subitem (selain bg biru), gunakan kelas lain atau sesuaikan CSS.
+                    // $targetLink.parent('li').addClass('active'); // --> KEMUNGKINAN INI TIDAK PERLU ATAU PERLU KELAS BERBEDA
+
+                    // (C) Cari elemen <li> dengan kelas 'submenu' yang merupakan induk dari link aktif (misalnya <li> "Product")
+                    let $parentSubmenuLi = $targetLink.closest('li.submenu');
+                    if ($parentSubmenuLi.length) {
+                        // Tambahkan kelas 'active' ke LINK <a> utama dari menu induk (misalnya link "Product")
+                        // Ini yang seharusnya memberikan background biru pada "Product" (seperti gambar kedua Anda)
+                        $parentSubmenuLi.children('a:first').addClass('active'); 
+                        
+                        // Tambahkan kelas 'subdrop' ke LINK <a> utama dari menu induk (untuk ikon panah)
+                        $parentSubmenuLi.children('a:first').addClass('subdrop'); 
+                        
+                        // Tampilkan submenu <ul> yang ada di bawahnya
+                        $parentSubmenuLi.children('ul').css('display', 'block');
+                    }
+                    console.log("Link aktif diatur untuk: " + currentPageFile);
+                } else {
+                    console.warn("Link aktif untuk " + currentPageFile + " tidak ditemukan di sidebar.");
+                    // Fallback: Jika tidak ada yang cocok, aktifkan Dashboard (index.html)
+                    if (currentPageFile === "index.html") {
+                         $sidebarMenu.find('a[href="index.html"]').parent('li').addClass('active');
+                    }
+                }
+
+                // 3. Inisialisasi ulang Feather Icons
+                if (typeof feather !== 'undefined') {
+                    feather.replace();
+                    console.log("Feather icons diinisialisasi untuk sidebar.");
+                }
+
+                // 4. INGAT: Pastikan script.js sudah dimodifikasi untuk Event Delegation
+                //    (mengubah $("#sidebar-menu a").on("click",...) 
+                //    menjadi $("#sidebar-placeholder").on("click", "#sidebar-menu a",...))
+                //    agar klik pada menu dropdown berfungsi dengan benar.
+
+                console.log("Inisialisasi komponen sidebar selesai.");
+
+            } else if (status == "error") {
+                console.error("Gagal memuat _sidebar.html: " + xhr.status + " " + xhr.statusText);
+                $("#sidebar-placeholder").html("<p style='color:red; padding: 10px;'>Gagal memuat sidebar.</p>");
+            }
+        });
+    });
     </script>
 </body>
 
