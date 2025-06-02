@@ -11,7 +11,7 @@
     <meta name="robots" content="noindex, nofollow">
     <title>Dreams Pos admin template</title>
 
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/img/favicon.jpg') }}">
+    <link rel="shortcut icon" type="image/x-xicon" href="{{ asset('assets/img/favicon.jpg') }}">
 
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
 
@@ -45,7 +45,7 @@
                 <div class="page-header">
                     <div class="page-title">
                         <h4>User Management</h4>
-                        <h6>Add/Update User</h6>
+                        <h6>Edit/Update User</h6>
                     </div>
                 </div>
 
@@ -55,16 +55,16 @@
                             <div class="col-lg-3 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label>User Name</label>
-                                    <input type="text">
+                                    <input type="text" placeholder="williams1234">
                                 </div>
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input type="text">
+                                    <input type="text" placeholder="williams1234@example.com">
                                 </div>
                                 <div class="form-group">
                                     <label>Password</label>
                                     <div class="pass-group">
-                                        <input type="password" class=" pass-input">
+                                        <input type="password" class=" pass-input" value="123456">
                                         <span class="fas toggle-password fa-eye-slash"></span>
                                     </div>
                                 </div>
@@ -72,32 +72,40 @@
                             <div class="col-lg-3 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label>Mobile</label>
-                                    <input type="text">
+                                    <input type="text" placeholder="+12163547758 ">
                                 </div>
                                 <div class="form-group">
                                     <label>Role</label>
                                     <select class="select">
-                                        <option>Select</option>
-                                        <option>Role</option>
-                                        <option>Role1</option>
+                                        <option>Manager</option>
+                                        <option>Sales Man</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Confirm Password</label>
                                     <div class="pass-group">
-                                        <input type="password" class=" pass-inputs">
+                                        <input type="password" class=" pass-inputs" value="123456">
                                         <span class="fas toggle-passworda fa-eye-slash"></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-6 col-12">
-                                <div class="form-group">
+                                <div class="form-group uploadedimage">
                                     <label> Profile Picture</label>
                                     <div class="image-upload image-upload-new">
+                                        {{-- Input file tidak perlu asset(), hanya img di dalamnya --}}
                                         <input type="file">
                                         <div class="image-uploads">
-                                            <img src="{{ asset('assets/img/icons/upload.svg') }}" alt="img">
-                                            <h4>Drag and drop a file to upload</h4>
+                                            <img src="{{ asset('assets/img/customer/customer1.jpg') }}" alt="img">
+                                            <div class="productviews">
+                                                <div class="productviewscontent">
+                                                    <div class="productviewsname">
+                                                        <h2>macbookpro.jpg</h2>
+                                                        <h3>581kb</h3>
+                                                    </div>
+                                                    <a href="javascript:void(0);" class="hideset">x</a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

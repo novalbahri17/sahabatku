@@ -64,7 +64,7 @@
             <div class="dropdown-menu notifications">
                 <div class="topnav-dropdown-header">
                     <span class="notification-title">Notifications</span>
-                    <a href="javascript:void(0)" class="clear-noti"> Clear All </a>
+                    <a href="activities.html"> Clear All </a>
                 </div>
                 <div class="noti-content">
                     <ul class="notification-list">
@@ -105,7 +105,8 @@
                         </div>
                     </div>
                     <hr class="m-0">
-                    <a class="dropdown-item" href="profile.html"> <i class="me-2" data-feather="user"></i> My Profile</a>
+                    {{-- Diperbaiki: Menggunakan rute Laravel untuk halaman profil --}}
+                    <a class="dropdown-item" href="{{ url('profile') }}"> <i class="me-2" data-feather="user"></i> My Profile</a>
                     <a class="dropdown-item" href="generalsettings.html"><i class="me-2" data-feather="settings"></i>Settings</a>
                     <hr class="m-0">
                     <a class="dropdown-item logout pb-0" href="signin.html"><img src="{{ asset('assets/img/icons/log-out.svg') }}" class="me-2" alt="Keluar">Logout</a>
@@ -119,7 +120,8 @@
             <i class="fa fa-ellipsis-v"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item" href="profile.html">My Profile</a>
+            {{-- Diperbaiki: Menggunakan rute Laravel untuk halaman profil --}}
+            <a class="dropdown-item" href="{{ url('profile') }}">My Profile</a>
             <a class="dropdown-item" href="generalsettings.html">Settings</a>
             <a class="dropdown-item" href="signin.html">Logout</a>
         </div>

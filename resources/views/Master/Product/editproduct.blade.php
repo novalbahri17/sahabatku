@@ -34,18 +34,23 @@
 
     <div class="main-wrapper">
 
-        {{-- Include Header --}}
+        {{-- Menggunakan @include untuk Header --}}
         @include('layout._header')
 
-        {{-- Include Sidebar --}}
+        {{-- Menggunakan @include untuk Sidebar --}}
         @include('layout._sidebar')
 
         <div class="page-wrapper">
             <div class="content">
                 <div class="page-header">
                     <div class="page-title">
-                        <h4>Product Add</h4>
-                        <h6>Create new product</h6>
+                        <h4>Product Edit</h4>
+                        <h6>Update your product</h6>
+                    </div>
+                    <div class="page-btn">
+                        <a href="{{ url('product/list') }}" class="btn btn-primary">
+                            <i data-feather="arrow-left"></i> Back 
+                        </a>
                     </div>
                 </div>
 
@@ -55,15 +60,15 @@
                             <div class="col-lg-3 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label>Product Name</label>
-                                    <input type="text">
+                                    <input type="text" value="Macbook pro">
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label>Category</label>
                                     <select class="select">
-                                        <option>Choose Category</option>
                                         <option>Computers</option>
+                                        <option>Mac</option>
                                     </select>
                                 </div>
                             </div>
@@ -71,8 +76,8 @@
                                 <div class="form-group">
                                     <label>Sub Category</label>
                                     <select class="select">
-                                        <option>Choose Sub Category</option>
-                                        <option>Fruits</option>
+                                        <option>None</option>
+                                        <option>option1</option>
                                     </select>
                                 </div>
                             </div>
@@ -80,8 +85,8 @@
                                 <div class="form-group">
                                     <label>Brand</label>
                                     <select class="select">
-                                        <option>Choose Brand</option>
-                                        <option>Brand</option>
+                                        <option>None</option>
+                                        <option>option1</option>
                                     </select>
                                 </div>
                             </div>
@@ -89,33 +94,33 @@
                                 <div class="form-group">
                                     <label>Unit</label>
                                     <select class="select">
-                                        <option>Choose Unit</option>
-                                        <option>Unit</option>
+                                        <option>Piece</option>
+                                        <option>Kg</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label>SKU</label>
-                                    <input type="text">
+                                    <input type="text" value="PT0002">
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label>Minimum Qty</label>
-                                    <input type="text">
+                                    <input type="text" value="5">
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label>Quantity</label>
-                                    <input type="text">
+                                    <input type="text" value="50">
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label>Description</label>
-                                    <textarea class="form-control"></textarea>
+                                    <textarea class="form-control">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</textarea>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-6 col-12">
@@ -140,14 +145,14 @@
                             <div class="col-lg-3 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label>Price</label>
-                                    <input type="text">
+                                    <input type="text" value="1500.00">
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label> Status</label>
                                     <select class="select">
-                                        <option>Closed</option>
+                                        <option>Active</option>
                                         <option>Open</option>
                                     </select>
                                 </div>
@@ -164,8 +169,28 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-12">
+                                <div class="product-list">
+                                    <ul class="row">
+                                        <li>
+                                            <div class="productviews">
+                                                <div class="productviewsimg">
+                                                    <img src="{{ asset('assets/img/icons/macbook.svg') }}" alt="img">
+                                                </div>
+                                                <div class="productviewscontent">
+                                                    <div class="productviewsname">
+                                                        <h2>macbookpro.jpg</h2>
+                                                        <h3>581kb</h3>
+                                                    </div>
+                                                    <a href="javascript:void(0);" class="hideset">x</a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                             <div class="col-lg-12">
-                                <a href="javascript:void(0);" class="btn btn-submit me-2">Submit</a>
+                                <a href="javascript:void(0);" class="btn btn-submit me-2">Update</a>
                                 <a href="{{ url('product/list') }}" class="btn btn-cancel">Cancel</a>
                             </div>
                         </div>
@@ -178,24 +203,31 @@
 
 
     <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
+
     <script src="{{ asset('assets/js/feather.min.js') }}"></script>
+
     <script src="{{ asset('assets/js/jquery.slimscroll.min.js') }}"></script>
+
     <script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/js/dataTables.bootstrap4.min.js') }}"></script>
+
     <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+
     <script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}"></script>
+
     <script src="{{ asset('assets/plugins/sweetalert/sweetalert2.all.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/sweetalert/sweetalerts.min.js') }}"></script>
+
     <script src="{{ asset('assets/js/script.js') }}"></script>
     <script>
         $(document).ready(function() {
-            // Re-initialize Feather icons after the whole page including includes is rendered
+            // Initialize Feather icons
             if (typeof feather !== 'undefined') {
                 feather.replace();
                 console.log("Feather icons initialized.");
             }
 
-            // Initialize SlimScroll if not already handled by script.js
+            // Initialize SlimScroll
             const $slimScrollDiv = $('.slimscroll');
             if ($slimScrollDiv.length && typeof $.fn.slimScroll === 'function') {
                 $slimScrollDiv.slimScroll({
@@ -217,12 +249,6 @@
             } else {
                 console.warn("Element .slimscroll not found or jQuery slimScroll plugin not ready.");
             }
-
-            // Note: The sidebar active link logic based on `Request::is()` in _sidebar.blade.php
-            // will now correctly highlight the active menu item when the page is loaded,
-            // as it's processed on the server.
-            // Client-side logic for setting active links based on current path is generally
-            // no longer needed with proper Blade includes and server-side route matching.
         });
     </script>
 </body>
